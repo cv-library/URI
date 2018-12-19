@@ -9,6 +9,12 @@ our $VERSION = '1.75';
 
 sub fix_path
 {
+    warnings::warnif('deprecated', 'fix_path is intended to be internal only and its use outside this module is not supported');
+    goto &_fix_path;
+}
+
+sub _fix_path
+{
     shift; # class
     for (@_) {
 	# turn it into 8.3 names

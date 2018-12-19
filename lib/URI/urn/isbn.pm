@@ -20,7 +20,7 @@ BEGIN {
     
 sub _isbn {
     my $nss = shift;
-    $nss = $nss->nss if ref($nss);
+    $nss = $nss->_nss if ref($nss);
     my $isbn = Business::ISBN->new($nss);
     $isbn = undef if $isbn && !$isbn->is_valid;
     return $isbn;
@@ -28,7 +28,7 @@ sub _isbn {
 
 sub _nss_isbn {
     my $self = shift;
-    my $nss = $self->nss(@_);
+    my $nss = $self->_nss(@_);
     my $isbn = _isbn($nss);
     $isbn = $isbn->as_string if $isbn;
     return($nss, $isbn);
@@ -98,7 +98,7 @@ sub canonical {
     my $new = $self->SUPER::canonical;
     return $new unless $nss && $isbn && $nss ne $isbn;
     $new = $new->clone if $new == $self;
-    $new->nss($isbn);
+    $new->_nss($isbn);
     return $new;
 }
 

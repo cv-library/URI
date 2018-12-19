@@ -53,7 +53,12 @@ sub _urn_init {
     bless $self, $class;
 }
 
-sub _nid {
+sub nid {
+    warnings::warnif('deprecated', 'nid is intended to be internal only and its use outside this module is not supported');
+    goto &_nid;
+}
+
+sub _nid {  # namespace identifier
     my $self = shift;
     my $opaque = $self->opaque;
     if (@_) {
@@ -64,17 +69,17 @@ sub _nid {
 	# XXX possible rebless
     }
     $opaque =~ s/:.*//s;
+    $opaque = lc($opaque) if defined($opaque);
     return $opaque;
 }
 
-sub nid {  # namespace identifier
-    my $self = shift;
-    my $nid = $self->_nid(@_);
-    $nid = lc($nid) if defined($nid);
-    return $nid;
+# This is used by URI::db
+sub nss {
+    warnings::warnif('deprecated', 'nss is intended to be internal only and its use outside this module is not supported');
+    goto &_nss;
 }
 
-sub nss {  # namespace specific string
+sub _nss {  # namespace specific string
     my $self = shift;
     my $opaque = $self->opaque;
     if (@_) {

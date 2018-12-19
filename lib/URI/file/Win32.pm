@@ -72,7 +72,7 @@ sub file
 	return undef if /\//;
 	#return undef if /\\/;        # URLs with "\" is not uncommon
     }
-    return undef unless $class->fix_path(@path);
+    return undef unless $class->_fix_path(@path);
 
     my $path = join("\\", @path);
     $path =~ s/^\\// if $rel;
@@ -82,6 +82,12 @@ sub file
     return $path;
 }
 
-sub fix_path { 1; }
+sub fix_path
+{
+    warnings::warnif('deprecated', 'fix_path is intended to be internal only and its use outside this module is not supported');
+    goto &_fix_path;
+}
+
+sub _fix_path { 1; }
 
 1;

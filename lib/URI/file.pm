@@ -25,6 +25,12 @@ our %OS_CLASS = (
 
 sub os_class
 {
+    warnings::warnif('deprecated', 'os_class is intended to be internal only and its use outside this module is not supported');
+    goto &_os_class;
+}
+
+sub _os_class
+{
     my($OS) = shift || $^O;
 
     my $class = "URI::file::" . ($OS_CLASS{$OS} || "Unix");

@@ -9,9 +9,9 @@ use parent 'URI::urn';
 
 sub oid {
     my $self = shift;
-    my $old = $self->nss;
+    my $old = $self->_nss;
     if (@_) {
-	$self->nss(join(".", @_));
+	$self->_nss(join(".", @_));
     }
     return split(/\./, $old) if wantarray;
     return $old;
